@@ -1,0 +1,25 @@
+services:
+  # Admin backend service - sử dụng MongoDB container hiện có từ ZaloUTE_be
+  admin-backend:
+    build: .
+    container_name: zalo_ute_admin
+    ports:
+      - "4001:4001"
+    environment:
+      - MONGO_URI=mongodb://root:example@zalo_ute_mongo:27017/zalo_ute?authSource=admin
+      - JWT_SECRET=admin_jwt_secret_key_2024_zaloute
+      - JWT_EXPIRES_IN=24h
+      - PORT=4001
+      - NODE_ENV=production
+      - DEFAULT_ADMIN_USERNAME=admin
+      - DEFAULT_ADMIN_PASSWORD=admin123
+      - DEFAULT_ADMIN_EMAIL=admin@zaloute.com
+    networks:
+      - zalo_ute_network
+    restart: unless-stopped
+    external_links:
+      - zalo_ute_mongo:mongo
+
+networks:
+  zalo_ute_network:
+    external: true
