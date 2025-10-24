@@ -1,14 +1,15 @@
-import React from 'react';
-import { Layout, Menu } from 'antd';
-import { 
-  DashboardOutlined, 
-  UserOutlined, 
-  TeamOutlined, 
+import React from "react";
+import { Layout, Menu } from "antd";
+import {
+  DashboardOutlined,
+  UserOutlined,
+  TeamOutlined,
   BarChartOutlined,
-  UserAddOutlined 
-} from '@ant-design/icons';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+  UserAddOutlined,
+  MessageOutlined,
+} from "@ant-design/icons";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 const { Sider } = Layout;
 
@@ -19,20 +20,29 @@ const Sidebar: React.FC = () => {
 
   const menuItems = [
     {
-      key: '/',
+      key: "/",
       icon: <DashboardOutlined />,
-      label: 'Tổng quan',
+      label: "Tổng quan",
     },
     {
-      key: '/users',
+      key: "/users",
       icon: <TeamOutlined />,
-      label: 'Quản lý người dùng',
+      label: "Quản lý người dùng",
     },
-    ...(admin?.role === 'super_admin' ? [{
-      key: '/admin/create',
-      icon: <UserAddOutlined />,
-      label: 'Tạo admin',
-    }] : []),
+    {
+      key: "/messages",
+      icon: <MessageOutlined />,
+      label: "Quản lý tin nhắn",
+    },
+    ...(admin?.role === "super_admin"
+      ? [
+          {
+            key: "/admin/create",
+            icon: <UserAddOutlined />,
+            label: "Tạo admin",
+          },
+        ]
+      : []),
   ];
 
   const handleMenuClick = ({ key }: { key: string }) => {
@@ -40,27 +50,29 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <Sider 
-      width={250} 
-      style={{ 
-        background: '#fff',
-        borderRight: '1px solid #f0f0f0'
+    <Sider
+      width={250}
+      style={{
+        background: "#fff",
+        borderRight: "1px solid #f0f0f0",
       }}
     >
-      <div style={{ 
-        padding: '16px', 
-        borderBottom: '1px solid #f0f0f0',
-        textAlign: 'center'
-      }}>
-        <h3 style={{ margin: 0, color: '#1890ff' }}>Menu</h3>
+      <div
+        style={{
+          padding: "16px",
+          borderBottom: "1px solid #f0f0f0",
+          textAlign: "center",
+        }}
+      >
+        <h3 style={{ margin: 0, color: "#1890ff" }}>Menu</h3>
       </div>
-      
+
       <Menu
         mode="inline"
         selectedKeys={[location.pathname]}
-        style={{ 
+        style={{
           borderRight: 0,
-          background: '#fff'
+          background: "#fff",
         }}
         items={menuItems}
         onClick={handleMenuClick}
